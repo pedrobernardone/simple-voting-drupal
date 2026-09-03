@@ -1,0 +1,160 @@
+simple_voting.api.questions_list:
+  path: '/api/v1/voting/questions'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingApiController::listQuestions'
+  methods: [GET]
+  requirements:
+    _permission: 'use simple voting external api'
+  options:
+    _auth: ['simple_voting_api_key']
+    no_cache: TRUE
+
+simple_voting.api.question_show:
+  path: '/api/v1/voting/questions/{voting_question}'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingApiController::showQuestion'
+  methods: [GET]
+  requirements:
+    _permission: 'use simple voting external api'
+  options:
+    _auth: ['simple_voting_api_key']
+    no_cache: TRUE
+    parameters:
+      voting_question:
+        type: entity:voting_question
+
+simple_voting.api.question_vote:
+  path: '/api/v1/voting/questions/{voting_question}/votes'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingApiController::castVote'
+  methods: [POST]
+  requirements:
+    _permission: 'use simple voting external api'
+  options:
+    _auth: ['simple_voting_api_key']
+    no_cache: TRUE
+    parameters:
+      voting_question:
+        type: entity:voting_question
+
+simple_voting.api.question_results:
+  path: '/api/v1/voting/questions/{voting_question}/results'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingApiController::showResults'
+  methods: [GET]
+  requirements:
+    _permission: 'use simple voting external api'
+  options:
+    _auth: ['simple_voting_api_key']
+    no_cache: TRUE
+    parameters:
+      voting_question:
+        type: entity:voting_question
+
+# --- CMS admin routes ---
+
+entity.voting_question.collection:
+  path: '/admin/content/voting-question'
+  defaults:
+    _entity_list: 'voting_question'
+    _title: 'Voting questions'
+  requirements:
+    _permission: 'administer simple voting'
+
+entity.voting_question.canonical:
+  path: '/admin/content/voting-question/{voting_question}'
+  defaults:
+    _entity_view: 'voting_question'
+    _title: 'View question'
+  requirements:
+    _entity_access: 'voting_question.view'
+
+entity.voting_question.add_form:
+  path: '/admin/content/voting-question/add'
+  defaults:
+    _entity_form: 'voting_question.add'
+    _title: 'Add question'
+  requirements:
+    _entity_create_access: 'voting_question'
+
+entity.voting_question.edit_form:
+  path: '/admin/content/voting-question/{voting_question}/edit'
+  defaults:
+    _entity_form: 'voting_question.edit'
+    _title: 'Edit question'
+  requirements:
+    _entity_access: 'voting_question.update'
+
+entity.voting_question.delete_form:
+  path: '/admin/content/voting-question/{voting_question}/delete'
+  defaults:
+    _entity_form: 'voting_question.delete'
+    _title: 'Delete question'
+  requirements:
+    _entity_access: 'voting_question.delete'
+
+entity.voting_option.add_form:
+  path: '/admin/content/voting-question/{voting_question}/option/add'
+  defaults:
+    _entity_form: 'voting_option.add'
+    _title: 'Add answer option'
+  requirements:
+    _permission: 'administer simple voting'
+
+entity.voting_option.edit_form:
+  path: '/admin/content/voting-option/{voting_option}/edit'
+  defaults:
+    _entity_form: 'voting_option.edit'
+    _title: 'Edit answer option'
+  requirements:
+    _permission: 'administer simple voting'
+
+entity.voting_option.delete_form:
+  path: '/admin/content/voting-option/{voting_option}/delete'
+  defaults:
+    _entity_form: 'voting_option.delete'
+    _title: 'Delete answer option'
+  requirements:
+    _permission: 'administer simple voting'
+
+simple_voting.settings_form:
+  path: '/admin/config/content/simple-voting'
+  defaults:
+    _form: '\Drupal\simple_voting\Form\SimpleVotingSettingsForm'
+    _title: 'Simple Voting settings'
+  requirements:
+    _permission: 'administer simple voting'
+
+# --- CMS end-user voting routes ---
+
+simple_voting.question_list:
+  path: '/voting'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingPageController::listQuestions'
+    _title: 'Vote'
+  requirements:
+    _permission: 'cast simple voting vote'
+
+simple_voting.question_vote:
+  path: '/voting/question/{voting_question}'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingPageController::showQuestion'
+    _title: 'Vote'
+  requirements:
+    _permission: 'cast simple voting vote'
+  options:
+    parameters:
+      voting_question:
+        type: entity:voting_question
+
+simple_voting.question_vote_submit:
+  path: '/voting/question/{voting_question}/vote'
+  defaults:
+    _controller: '\Drupal\simple_voting\Controller\VotingPageController::submitVote'
+  methods: [POST]
+  requirements:
+    _permission: 'cast simple voting vote'
+  options:
+    parameters:
+      voting_question:
+        type: entity:voting_question

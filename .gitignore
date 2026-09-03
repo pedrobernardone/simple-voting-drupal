@@ -1,0 +1,19 @@
+# Composer-managed dependencies (installed via `lando composer install`).
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+/web/sites/*/files/
+
+# Drupal generated/local settings.
+/web/sites/*/settings.local.php
+/web/sites/*/services.local.yml
+
+# Lando local state.
+.lando.local.yml
+
+# Editor/OS noise.
+.DS_Store
+*.swp

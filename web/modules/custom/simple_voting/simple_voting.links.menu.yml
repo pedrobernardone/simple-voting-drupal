@@ -1,0 +1,19 @@
+simple_voting.admin_questions:
+  title: 'Voting questions'
+  route_name: entity.voting_question.collection
+  description: 'Manage voting questions and their answer options.'
+  parent: system.admin_content
+  weight: 10
+
+simple_voting.admin_settings:
+  title: 'Simple Voting settings'
+  route_name: simple_voting.settings_form
+  description: 'Configure global settings for the voting system.'
+  parent: system.admin_config_content
+  weight: 10
+
+simple_voting.vote:
+  title: 'Vote'
+  route_name: simple_voting.question_list
+  menu_name: main
+  weight: 5

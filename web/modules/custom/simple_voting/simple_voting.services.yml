@@ -1,0 +1,14 @@
+services:
+  simple_voting.settings:
+    class: Drupal\simple_voting\Service\VotingSettings
+    arguments: ['@config.factory']
+
+  simple_voting.vote_service:
+    class: Drupal\simple_voting\Service\VoteService
+    arguments: ['@entity_type.manager', '@simple_voting.settings', '@database']
+
+  simple_voting.api_key_auth:
+    class: Drupal\simple_voting\Authentication\Provider\ApiKeyAuth
+    arguments: ['@config.factory']
+    tags:
+      - { name: authentication_provider, provider_id: 'simple_voting_api_key', priority: 100 }

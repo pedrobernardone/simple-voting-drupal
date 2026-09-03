@@ -1,0 +1,16 @@
+administer simple voting:
+  title: 'Administer simple voting'
+  description: 'Create, edit and delete voting questions and their answer options; manage global voting settings.'
+  restrict access: true
+
+cast simple voting vote:
+  title: 'Cast a vote'
+  description: 'Vote on active voting questions from within the CMS.'
+
+view simple voting results:
+  title: 'View voting results'
+  description: 'View aggregated voting results when a question is configured to show them.'
+
+use simple voting external api:
+  title: 'Use the external voting API'
+  description: 'Read questions/results and cast votes through the external REST API. Granted to the API client role, not to end users.'

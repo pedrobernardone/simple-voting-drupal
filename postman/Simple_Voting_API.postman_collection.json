@@ -1,0 +1,124 @@
+{
+  "info": {
+    "name": "Simple Voting - External API",
+    "description": "Manual REST API for the Simple Voting Drupal module. Authentication is a static API key sent in the X-API-Key header, identifying the calling application. Voter identity for the one-vote-per-question rule is the \"external_user_id\" sent in the vote payload.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://simple-voting-drupal.lndo.site:8000"
+    },
+    {
+      "key": "api_key",
+      "value": "test-api-key-123"
+    },
+    {
+      "key": "question_id",
+      "value": "1"
+    },
+    {
+      "key": "option_id",
+      "value": "1"
+    },
+    {
+      "key": "external_user_id",
+      "value": "postman-user-1"
+    }
+  ],
+  "item": [
+    {
+      "name": "List open questions",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "X-API-Key", "value": "{{api_key}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/voting/questions",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "voting", "questions"]
+        }
+      }
+    },
+    {
+      "name": "Show question detail (with options)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "X-API-Key", "value": "{{api_key}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/voting/questions/{{question_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "voting", "questions", "{{question_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Cast a vote",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "X-API-Key", "value": "{{api_key}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"option_id\": {{option_id}},\n  \"external_user_id\": \"{{external_user_id}}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/voting/questions/{{question_id}}/votes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "voting", "questions", "{{question_id}}", "votes"]
+        }
+      }
+    },
+    {
+      "name": "Cast a vote (duplicate - expect 409)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "X-API-Key", "value": "{{api_key}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"option_id\": {{option_id}},\n  \"external_user_id\": \"{{external_user_id}}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/voting/questions/{{question_id}}/votes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "voting", "questions", "{{question_id}}", "votes"]
+        },
+        "description": "Run this right after 'Cast a vote' with the same external_user_id to see the 409 already_voted error."
+      }
+    },
+    {
+      "name": "Get results",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "X-API-Key", "value": "{{api_key}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/voting/questions/{{question_id}}/results",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "voting", "questions", "{{question_id}}", "results"]
+        }
+      }
+    },
+    {
+      "name": "List questions (no API key - expect 403)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/voting/questions",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "voting", "questions"]
+        }
+      }
+    }
+  ]
+}

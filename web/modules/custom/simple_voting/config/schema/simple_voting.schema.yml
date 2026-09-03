@@ -1,0 +1,10 @@
+simple_voting.settings:
+  type: config_object
+  label: 'Simple Voting settings'
+  mapping:
+    voting_disabled:
+      type: boolean
+      label: 'Voting disabled globally'
+    api_key:
+      type: string
+      label: 'External API key'

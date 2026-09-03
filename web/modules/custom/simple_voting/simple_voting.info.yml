@@ -1,0 +1,9 @@
+name: 'Simple Voting'
+type: module
+description: 'Simple voting system: admin-managed questions with answer options, one vote per user per question, configurable result visibility, and a manual REST API for external applications.'
+package: Custom
+core_version_requirement: ^10
+dependencies:
+  - drupal:user
+  - drupal:file
+  - drupal:image

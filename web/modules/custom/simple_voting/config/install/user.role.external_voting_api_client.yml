@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - simple_voting
+id: external_voting_api_client
+label: 'External voting API client'
+weight: 2
+is_admin: false
+permissions:
+  - 'use simple voting external api'
