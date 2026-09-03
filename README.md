@@ -12,9 +12,12 @@ Sistema de votação simples implementado como módulo custom do Drupal 10 (`sim
 ```bash
 git clone <repo>
 cd simple-voting-drupal
+cp web/sites/default/default.settings.php web/sites/default/settings.php
 lando start
 lando composer install
 ```
+
+O `settings.php` não é versionado (contém `hash_salt` e credenciais de banco geradas por instalação); o `lando start` completa a configuração automaticamente na primeira instalação.
 
 O `lando start` provisiona PHP 8.3, MySQL 8.0 e Nginx. O site já vem instalado (perfil `standard`) com o módulo `simple_voting` habilitado.
 
@@ -32,6 +35,13 @@ lando drush en simple_voting -y
 
 ```bash
 lando drush sql:cli < database/dump.sql
+```
+
+O dump não contém senhas nem API key reais (foram redigidas antes de subir ao repositório). Depois de importar, defina sua própria senha e API key:
+
+```bash
+lando drush user:password admin 'sua-senha-aqui'
+lando drush php:eval "\Drupal::configFactory()->getEditable('simple_voting.settings')->set('api_key', 'sua-chave-aqui')->save();"
 ```
 
 ## Configuração da API externa

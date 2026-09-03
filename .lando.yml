@@ -6,8 +6,3 @@ config:
   composer_version: 2-latest
   webroot: web
   database: mysql:8.0
-services:
-  appserver:
-    overrides:
-      environment:
-        SIMPLE_VOTING_API_KEY: "dev-local-api-key-change-me"
