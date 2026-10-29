@@ -1,13 +1,13 @@
-# Simple Voting
+# 🗳️ Simple Voting
 
 Sistema de votação simples implementado como módulo custom do Drupal 10 (`simple_voting`), com entidades de conteúdo próprias (sem usar `node`), interface administrativa integrada ao CMS, página de votação para usuários autenticados e uma API REST externa implementada manualmente (sem JSON:API).
 
-## Requisitos
+## 📋 Requisitos
 
 - Docker
 - [Lando](https://docs.lando.dev/)
 
-## Como rodar o projeto
+## 🚀 Como rodar o projeto
 
 ```bash
 git clone <repo>
@@ -44,7 +44,7 @@ lando drush user:password admin 'sua-senha-aqui'
 lando drush php:eval "\Drupal::configFactory()->getEditable('simple_voting.settings')->set('api_key', 'sua-chave-aqui')->save();"
 ```
 
-## Configuração da API externa
+## ⚙️ Configuração da API externa
 
 Antes de usar a API, defina a API key em **Configuration > Simple Voting settings** (`/admin/config/content/simple-voting`), ou via drush:
 
@@ -54,7 +54,7 @@ lando drush php:eval "\Drupal::configFactory()->getEditable('simple_voting.setti
 
 Todas as requisições à API externa devem enviar essa chave no header `X-API-Key`.
 
-## Estrutura do módulo
+## 📁 Estrutura do módulo
 
 `web/modules/custom/simple_voting/`
 
@@ -66,7 +66,7 @@ Todas as requisições à API externa devem enviar essa chave no header `X-API-K
 - **Autenticação da API externa** (`src/Authentication/Provider/ApiKeyAuth.php`): provider de autenticação Drupal custom, valida o header `X-API-Key` contra a chave configurada.
 - **API externa** (`src/Controller/VotingApiController.php`): endpoints REST manuais, sem JSON:API nem Serializer — JSON montado à mão.
 
-## Endpoints da API externa
+## 🔌 Endpoints da API externa
 
 Todos exigem o header `X-API-Key`.
 
@@ -79,17 +79,17 @@ Todos exigem o header `X-API-Key`.
 
 Uma collection Postman pronta está em `postman/Simple_Voting_API.postman_collection.json`.
 
-## Interface administrativa
+## 🖥️ Interface administrativa
 
 - `/admin/content/voting-question` — listar/criar/editar perguntas
 - Dentro de cada pergunta: adicionar opções de resposta (título, descrição, imagem)
 - `/admin/config/content/simple-voting` — configurações globais (desabilitar votação, API key)
 
-## Votação pelo CMS
+## 🗳️ Votação pelo CMS
 
 Usuários autenticados com a permissão "Cast a vote" acessam `/voting` para ver as perguntas abertas e votar. Após votar, se a pergunta tiver "Show results" habilitado, os resultados agregados são exibidos.
 
-## Testes automatizados
+## 🧪 Testes automatizados
 
 ```bash
 lando ssh -c "cd /app && SIMPLETEST_DB=mysql://drupal10:drupal10@database/drupal10 SIMPLETEST_BASE_URL=http://localhost vendor/bin/phpunit -c web/core web/modules/custom/simple_voting/tests/src/Kernel/VoteServiceTest.php"
